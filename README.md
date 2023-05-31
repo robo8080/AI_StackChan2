@@ -1,61 +1,43 @@
 # AI_StackChan2
-AI½À¯¸Á¬Ý2‚Å‚·B
+AIï½½ï¾€ï½¯ï½¸ï¾ï½¬ï¾2ã§ã™ã€‚
 <br><br>
 
-![‰æ‘œ1](images/image1.png)<br><br>
+![ç”»åƒ1](images/image1.png)<br><br>
 
-AI½À¯¸Á¬Ý2‚Ì“Á’¥<br>
+AIï½½ï¾€ï½¯ï½¸ï¾ï½¬ï¾2ã®ç‰¹å¾´<br>
 
-* ‰¹º‡¬‚ÉWeb”Å VOICEVOX‚ðŽg‚¢‚Ü‚·B
-* ‰¹º”FŽ¯‚É"Google Cloud STT"‚©"OpenAI Whisper"‚Ì‚Ç‚¿‚ç‚©‚ð‘I‘ð‚Å‚«‚Ü‚·B
+* éŸ³å£°åˆæˆã«Webç‰ˆ VOICEVOXã‚’ä½¿ã„ã¾ã™ã€‚
+* éŸ³å£°èªè­˜ã«"Google Cloud STT"ã‹"OpenAI Whisper"ã®ã©ã¡ã‚‰ã‹ã‚’é¸æŠžã§ãã¾ã™ã€‚
 <br>
 
-Google Cloud STT‚ÍAhMhageGHh‚³‚ñ‚Ì [esp32_CloudSpeech](https://github.com/MhageGH/esp32_CloudSpeech/ "Title") ‚ðŽQl‚É‚³‚¹‚Ä’¸‚«‚Ü‚µ‚½B‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½B<br>
-"OpenAI Whisper"‚ªŽg‚¦‚é‚æ‚¤‚É‚·‚é‚É‚ ‚½‚Á‚ÄA‘½‘å‚È‚²•Œ¾‚ð’¸‚¢‚½hƒCƒiƒoh‚³‚ñAhkobatanh‚³‚ñ‚ÉŠ´ŽÓ’v‚µ‚Ü‚·B<br>
+Google Cloud STTã¯ã€â€MhageGHâ€ã•ã‚“ã® [esp32_CloudSpeech](https://github.com/MhageGH/esp32_CloudSpeech/ "Title") ã‚’å‚è€ƒã«ã•ã›ã¦é ‚ãã¾ã—ãŸã€‚ã‚ã‚ŠãŒã¨ã†ã”ã–ã„ã¾ã—ãŸã€‚<br>
+"OpenAI Whisper"ãŒä½¿ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹ã«ã‚ãŸã£ã¦ã€å¤šå¤§ãªã”åŠ©è¨€ã‚’é ‚ã„ãŸâ€ã‚¤ãƒŠãƒâ€ã•ã‚“ã€â€kobatanâ€ã•ã‚“ã«æ„Ÿè¬è‡´ã—ã¾ã™ã€‚<br>
 
 ---
 
 
-### M5GoBottom”Å½À¯¸Á¬Ý–{‘Ì‚ðì‚é‚Ì‚É•K—v‚È•¨A‹y‚Ñì‚è•û ###
-‚±‚¿‚ç‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B<br>
-* [½À¯¸Á¬Ý M5GoBottom”Å‘g‚Ý—§‚ÄƒLƒbƒg](https://raspberrypi.mongonta.com/about-products-stackchan-m5gobottom-version/ "Title")<br>
+### M5GoBottomç‰ˆï½½ï¾€ï½¯ï½¸ï¾ï½¬ï¾æœ¬ä½“ã‚’ä½œã‚‹ã®ã«å¿…è¦ãªç‰©ã€åŠã³ä½œã‚Šæ–¹ ###
+ã“ã¡ã‚‰ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚<br>
+* [ï½½ï¾€ï½¯ï½¸ï¾ï½¬ï¾ M5GoBottomç‰ˆçµ„ã¿ç«‹ã¦ã‚­ãƒƒãƒˆ](https://raspberrypi.mongonta.com/about-products-stackchan-m5gobottom-version/ "Title")<br>
 
-### ƒvƒƒOƒ‰ƒ€‚ðƒrƒ‹ƒh‚·‚é‚Ì‚É•K—v‚È•¨ ###
+### ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’ãƒ“ãƒ«ãƒ‰ã™ã‚‹ã®ã«å¿…è¦ãªç‰© ###
 * [M5Stack Core2](http://www.m5stack.com/ "Title")<br>
 * VSCode<br>
 * PlatformIO<br>
 
-Žg—p‚µ‚Ä‚¢‚éƒ‰ƒCƒuƒ‰ƒŠ“™‚Í"platformio.ini"‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B<br>
+ä½¿ç”¨ã—ã¦ã„ã‚‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªç­‰ã¯"platformio.ini"ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚<br>
 
-y5/31‚ÌŽž“_‚Å‚ÍM5Unified‚Ì•s‹ï‡‚Ìˆ×ACoreS3‚Å‚Í“®‚«‚Ü‚¹‚ñBz<br>
-
----
-
-### ƒT[ƒ{ƒ‚[ƒ^[‚ðŽg—p‚·‚éGPIO”Ô†‚ÌÝ’è ###
-* main.cpp‚Ì46s–Ú•t‹ßAƒT[ƒ{ƒ‚[ƒ^[‚ðŽg—p‚·‚éGPIO”Ô†‚ðÝ’è‚µ‚Ä‚­‚¾‚³‚¢B
-
-
-### M5GoBottom”Å½À¯¸Á¬Ý–{‘Ì‚ðì‚é‚Ì‚É•K—v‚È•¨A‹y‚Ñì‚è•û ###
-‚±‚¿‚ç‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B<br>
-
-* [½À¯¸Á¬Ý M5GoBottom”Å‘g‚Ý—§‚ÄƒLƒbƒg](https://raspberrypi.mongonta.com/about-products-stackchan-m5gobottom-version/ "Title")<br>
-
-### ƒvƒƒOƒ‰ƒ€‚ðƒrƒ‹ƒh‚·‚é‚Ì‚É•K—v‚È•¨ ###
-* [M5Stack Core2](http://www.m5stack.com/ "Title")<br>
-* VSCode<br>
-* PlatformIO<br>
-
-Žg—p‚µ‚Ä‚¢‚éƒ‰ƒCƒuƒ‰ƒŠ“™‚Í"platformio.ini"‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B<br>
+ã€5/31ã®æ™‚ç‚¹ã§ã¯M5Unifiedã®ä¸å…·åˆã®ç‚ºã€CoreS3ã§ã¯å‹•ãã¾ã›ã‚“ã€‚ã€‘<br>
 
 ---
 
-### ƒT[ƒ{ƒ‚[ƒ^[‚ðŽg—p‚·‚éGPIO”Ô†‚ÌÝ’è ###
+### ã‚µãƒ¼ãƒœãƒ¢ãƒ¼ã‚¿ãƒ¼ã‚’ä½¿ç”¨ã™ã‚‹GPIOç•ªå·ã®è¨­å®š ###
+* main.cppã®46è¡Œç›®ä»˜è¿‘ã€ã‚µãƒ¼ãƒœãƒ¢ãƒ¼ã‚¿ãƒ¼ã‚’ä½¿ç”¨ã™ã‚‹GPIOç•ªå·ã‚’è¨­å®šã—ã¦ãã ã•ã„ã€‚
 
-* M5Unified_StackChan_ChatGPT.ino‚Ì42s–Ú•t‹ßAƒT[ƒ{ƒ‚[ƒ^[‚ðŽg—p‚·‚éGPIO”Ô†‚ðÝ’è‚µ‚Ä‚­‚¾‚³‚¢B
 
-### Žg‚¢•û ###
+### ä½¿ã„æ–¹ ###
 
-‚±‚¿‚ç‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B<br>
+ã“ã¡ã‚‰ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚<br>
 
 * [AI_StackChan2_README](https://github.com/robo8080/AI_StackChan2_README/ "Title")<br>
 <br>
