@@ -1,7 +1,7 @@
 #ifndef _AUDIOWHISPER_H
 #define _AUDIOWHISPER_H
 
-#include <AudioWhisper.h>
+#include "AudioWhisper.h"
 
 class AudioWhisper {
   byte* record_buffer;

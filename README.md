@@ -27,7 +27,7 @@ Google Cloud STTは、”MhageGH”さんの [esp32_CloudSpeech](https://github.
 
 使用しているライブラリ等は"platformio.ini"を参照してください。<br>
 
-【5/31の時点ではM5Unifiedの不具合の為、CoreS3では動きません。】<br>
+~~【5/31の時点ではM5Unifiedの不具合の為、CoreS3では動きません。】~~<br>
 
 ---
 
