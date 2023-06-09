@@ -197,7 +197,7 @@ static const char ROLE_HTML[] PROGMEM = R"KEWL(
 String speech_text = "";
 String speech_text_buffer = "";
 DynamicJsonDocument chat_doc(1024*10);
-String json_ChatString = "{\"model\": \"gpt-3.5-turbo\",\"messages\": [{\"role\": \"user\", \"content\": \"""\"}]}";
+String json_ChatString = "{\"model\": \"gpt-3.5-turbo-0613\",\"messages\": [{\"role\": \"user\", \"content\": \"""\"}]}";
 String Role_JSON = "";
 
 bool init_chat_doc(const char *data)
@@ -522,7 +522,8 @@ void handle_role_set() {
   }
   String role = server.arg("plain");
   if (role != "") {
-    init_chat_doc(InitBuffer.c_str());
+//    init_chat_doc(InitBuffer.c_str());
+    init_chat_doc(json_ChatString.c_str());
     JsonArray messages = chat_doc["messages"];
     JsonObject systemMessage1 = messages.createNestedObject();
     systemMessage1["role"] = "system";
