@@ -199,7 +199,7 @@ static const char ROLE_HTML[] PROGMEM = R"KEWL(
 String speech_text = "";
 String speech_text_buffer = "";
 DynamicJsonDocument chat_doc(1024*10);
-String json_ChatString = "{\"model\": \"gpt-3.5-turbo-0613\",\"messages\": [{\"role\": \"user\", \"content\": \"""\"}]}";
+String json_ChatString = "{\"model\": \"gpt-3.5-turbo-1106\",\"messages\": [{\"role\": \"user\", \"content\": \"""\"}]}";
 String Role_JSON = "";
 
 bool init_chat_doc(const char *data)
@@ -614,7 +614,7 @@ void handle_setting() {
       else  led_onoff = 0;
       nvs_set_u8(nvs_handle, "led", led_onoff);
     }
-    nvs_set_u8(nvs_handle, "speaker", speaker_no);
+    if(speaker != "") nvs_set_u8(nvs_handle, "speaker", speaker_no);
 
     nvs_close(nvs_handle);
   }
