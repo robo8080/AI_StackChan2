@@ -48,8 +48,8 @@ std::deque<String> chatHistory;
 #define USE_SERVO
 #ifdef USE_SERVO
 #if defined(ARDUINO_M5STACK_Core2)
-//#define PORT_A
-#define PORT_C
+#define PORT_A
+//#define PORT_C
 #if defined (PORT_A)
   #define SERVO_PIN_X 33  //Core2 PORT A
   #define SERVO_PIN_Y 32
