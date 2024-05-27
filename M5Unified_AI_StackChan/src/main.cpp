@@ -20,7 +20,11 @@
 #include "rootCAgoogle.h"
 #include <ArduinoJson.h>
 #include <ESP32WebServer.h>
-//#include <ESPmDNS.h>
+#define ENABLE_MDNS
+#ifdef ENABLE_MDNS
+#define MDNS_HOST "stack-chan"
+#include <ESPmDNS.h>
+#endif
 #include <deque>
 #include "AudioWhisper.h"
 #include "Whisper.h"
@@ -44,10 +48,15 @@ std::deque<String> chatHistory;
 #define USE_SERVO
 #ifdef USE_SERVO
 #if defined(ARDUINO_M5STACK_Core2)
-  // #define SERVO_PIN_X 13  //Core2 PORT C
-  // #define SERVO_PIN_Y 14
+//#define PORT_A
+#define PORT_C
+#if defined (PORT_A)
   #define SERVO_PIN_X 33  //Core2 PORT A
   #define SERVO_PIN_Y 32
+#elif defined (PORT_C)
+  #define SERVO_PIN_X 14  //Core2 PORT C (INTERNAL UART2)
+  #define SERVO_PIN_Y 13
+#endif
 #elif defined( ARDUINO_M5STACK_FIRE )
   #define SERVO_PIN_X 21
   #define SERVO_PIN_Y 22
@@ -216,7 +225,7 @@ bool init_chat_doc(const char *data)
 }
 
 void handleRoot() {
-  server.send(200, "text/plain", "hello from m5stack!");
+  server.send(200, "text/html", "<html><head><meta charset=\"UTF-8\"/></head><body><pre>hello from m5stack!\n&boxdr;&boxh;&boxh;&boxh;&boxdl;\n&boxv;&#729;_&#729;&boxv;\n&boxur;&boxh;&boxh;&boxh;&boxul;</pre></body></html>");
 }
 
 void handleNotFound(){
@@ -727,10 +736,10 @@ void servo(void *args)
 
 void Servo_setup() {
 #ifdef USE_SERVO
-  if (servo_x.attach(SERVO_PIN_X, START_DEGREE_VALUE_X, DEFAULT_MICROSECONDS_FOR_0_DEGREE, DEFAULT_MICROSECONDS_FOR_180_DEGREE)) {
+  if (servo_x.attach(SERVO_PIN_X, START_DEGREE_VALUE_X, DEFAULT_MICROSECONDS_FOR_0_DEGREE, DEFAULT_MICROSECONDS_FOR_180_DEGREE) == INVALID_SERVO) {
     Serial.print("Error attaching servo x");
   }
-  if (servo_y.attach(SERVO_PIN_Y, START_DEGREE_VALUE_Y, DEFAULT_MICROSECONDS_FOR_0_DEGREE, DEFAULT_MICROSECONDS_FOR_180_DEGREE)) {
+  if (servo_y.attach(SERVO_PIN_Y, START_DEGREE_VALUE_Y, DEFAULT_MICROSECONDS_FOR_0_DEGREE, DEFAULT_MICROSECONDS_FOR_180_DEGREE) == INVALID_SERVO) {
     Serial.print("Error attaching servo y");
   }
   servo_x.setEasingType(EASE_QUADRATIC_IN_OUT);
@@ -1025,15 +1034,26 @@ void setup()
   M5.Lcd.print("Connecting");
   Wifi_setup();
   M5.Lcd.println("\nConnected");
+
+#ifdef ENABLE_MDNS
+  if (MDNS.begin(MDNS_HOST)) {
+    Serial.println("MDNS responder started");
+    M5.Lcd.println("MDNS responder started");
+  }
+#endif
+
   Serial.printf_P(PSTR("Go to http://"));
   M5.Lcd.print("Go to http://");
   Serial.println(WiFi.localIP());
   M5.Lcd.println(WiFi.localIP());
 
-  // if (MDNS.begin("m5stack")) {
-  //   Serial.println("MDNS responder started");
-  //   M5.Lcd.println("MDNS responder started");
-  // }
+#ifdef ENABLE_MDNS
+  Serial.printf_P(PSTR("or http://%s.local"), PSTR(MDNS_HOST));
+  Serial.println();
+  M5.Lcd.printf("or http://%s.local", MDNS_HOST);
+  M5.Lcd.println();
+#endif
+
   delay(1000);
 
   server.on("/", handleRoot);
