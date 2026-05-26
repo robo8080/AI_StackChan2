@@ -93,6 +93,75 @@ String TTS_SPEAKER_NO = "3";
 String TTS_SPEAKER = "&speaker=";
 String TTS_PARMS = TTS_SPEAKER + TTS_SPEAKER_NO;
 //---------------------------------------------
+int splitLines(char* buf, size_t sz, int* starts, int max_starts) {
+  int count = sz > 0 ? 1 : 0;
+  if (count > 0) starts[0] = 0;
+
+  for (size_t x = 0; x < sz; x++) {
+    if (buf[x] == 0x0a || buf[x] == 0x0d) {
+      buf[x] = 0;
+    } else if (count < max_starts && x > 0 && !buf[x - 1] && buf[x]) {
+      starts[count++] = x;
+    }
+  }
+  return count;
+}
+
+bool loadWifiFromFS(fs::FS& storage) {
+  File fs = storage.open("/wifi.txt", FILE_READ);
+  if (!fs) return false;
+
+  size_t sz = fs.size();
+  char buf[sz + 1];
+  fs.read((uint8_t*)buf, sz);
+  buf[sz] = 0;
+  fs.close();
+
+  int starts[2] = {0, 0};
+  if (splitLines(buf, sz, starts, 2) < 2) return false;
+
+  WiFi.begin(&buf[starts[0]], &buf[starts[1]]);
+  return true;
+}
+
+bool loadApiKeysFromFS(fs::FS& storage) {
+  File fs = storage.open("/apikey.txt", FILE_READ);
+  if (!fs) return false;
+
+  size_t sz = fs.size();
+  char buf[sz + 1];
+  fs.read((uint8_t*)buf, sz);
+  buf[sz] = 0;
+  fs.close();
+
+  int starts[3] = {0, 0, 0};
+  if (splitLines(buf, sz, starts, 3) < 3) return false;
+
+  uint32_t nvs_handle;
+  if (ESP_OK == nvs_open("apikey", NVS_READWRITE, &nvs_handle)) {
+    nvs_set_str(nvs_handle, "openai", &buf[starts[0]]);
+    nvs_set_str(nvs_handle, "voicevox", &buf[starts[1]]);
+    nvs_set_str(nvs_handle, "sttapikey", &buf[starts[2]]);
+    Serial.println("------------------------");
+    Serial.println(&buf[starts[0]]);
+    Serial.println(&buf[starts[1]]);
+    Serial.println(&buf[starts[2]]);
+    Serial.println("------------------------");
+    nvs_close(nvs_handle);
+    return true;
+  }
+  return false;
+}
+
+void loadSettingsFromFS(fs::FS& storage, bool& loaded_wifi, bool& loaded_api_keys) {
+  if (!loaded_wifi) {
+    loaded_wifi = loadWifiFromFS(storage);
+  }
+  if (!loaded_api_keys) {
+    loaded_api_keys = loadApiKeysFromFS(storage);
+  }
+}
+//---------------------------------------------
 bool wakeword_is_enable = false;
 //---------------------------------------------
 // C++11 multiline string constants are neato...
@@ -937,64 +1006,18 @@ void setup()
   STT_API_KEY = String(STT_APIKEY);
 #else
   /// settings
+  bool loaded_wifi = false;
+  bool loaded_api_keys = false;
   if (SD.begin(GPIO_NUM_4, SPI, 25000000)) {
-    /// wifi
-    auto fs = SD.open("/wifi.txt", FILE_READ);
-    if(fs) {
-      size_t sz = fs.size();
-      char buf[sz + 1];
-      fs.read((uint8_t*)buf, sz);
-      buf[sz] = 0;
-      fs.close();
-
-      int y = 0;
-      for(int x = 0; x < sz; x++) {
-        if(buf[x] == 0x0a || buf[x] == 0x0d)
-          buf[x] = 0;
-        else if (!y && x > 0 && !buf[x - 1] && buf[x])
-          y = x;
-      }
-      WiFi.begin(buf, &buf[y]);
-    } else {
-       WiFi.begin();
-    }
-
-    uint32_t nvs_handle;
-    if (ESP_OK == nvs_open("apikey", NVS_READWRITE, &nvs_handle)) {
-      /// radiko-premium
-      fs = SD.open("/apikey.txt", FILE_READ);
-      if(fs) {
-        size_t sz = fs.size();
-        char buf[sz + 1];
-        fs.read((uint8_t*)buf, sz);
-        buf[sz] = 0;
-        fs.close();
-  
-        int y = 0;
-        int z = 0;
-        for(int x = 0; x < sz; x++) {
-          if(buf[x] == 0x0a || buf[x] == 0x0d)
-            buf[x] = 0;
-          else if (!y && x > 0 && !buf[x - 1] && buf[x])
-            y = x;
-          else if (!z && x > 0 && !buf[x - 1] && buf[x])
-            z = x;
-        }
-
-        nvs_set_str(nvs_handle, "openai", buf);
-        nvs_set_str(nvs_handle, "voicevox", &buf[y]);
-        nvs_set_str(nvs_handle, "sttapikey", &buf[z]);
-        Serial.println("------------------------");
-        Serial.println(buf);
-        Serial.println(&buf[y]);
-        Serial.println(&buf[z]);
-        Serial.println("------------------------");
-      }
-      
-      nvs_close(nvs_handle);
-    }
+    loadSettingsFromFS(SD, loaded_wifi, loaded_api_keys);
     SD.end();
-  } else {
+  }
+
+  if ((!loaded_wifi || !loaded_api_keys) && SPIFFS.begin(true)) {
+    loadSettingsFromFS(SPIFFS, loaded_wifi, loaded_api_keys);
+  }
+
+  if (!loaded_wifi) {
     WiFi.begin();
   }
 
